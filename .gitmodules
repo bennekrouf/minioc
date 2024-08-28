@@ -1,3 +1,0 @@
-[submodule "proto-definitions"]
-	path = proto-definitions
-	url = git@192.95.30.129:backend/proto-definitions.git
