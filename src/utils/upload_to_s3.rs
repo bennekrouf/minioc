@@ -35,6 +35,9 @@ pub async fn upload_to_s3(
     let mut buffer = Vec::new();
     file.read_to_end(&mut buffer).await?;
 
+
+    println!("TENANT !!!!!! {} KEY : {}", &tenant, &key);
+
     // Upload to S3
     let request = rusoto_s3::PutObjectRequest {
         bucket: tenant.to_string(),

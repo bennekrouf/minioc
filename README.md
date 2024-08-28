@@ -56,7 +56,7 @@ You can use `grpcurl` to interact with the gRPC service. Here's an example of up
       -d @ \
       -rpc-header "tenant:minio-bucket" \
       -rpc-header "filename:test_file.txt" \
-      0.0.0.0:50051 minioc.Minioc/streamUpload < test_file.txt
+      0.0.0.0:50051 minioc.MiniocService/streamUpload < test_file.txt
     ```
 
 This will stream the contents of `test_file.txt` to the gRPC server, and the file will be uploaded to the S3 bucket named `minio-bucket`.
