@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Replace these with appropriate values
-FILE="test_file2.txt"
+FILE="toto.txt"
 TENANT="mayorana"
-FILENAME="test_file.txt"
+FILENAME="toto.txt"
 
 # Stream file chunks to grpcurl
 while IFS= read -r -n 1024 chunk; do
