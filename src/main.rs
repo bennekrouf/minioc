@@ -4,17 +4,17 @@ mod utils;
 
 use tonic::transport::Server;
 use std::env;
+use std::path::Path;
 use tonic_reflection::server::Builder;
 use crate::minioc_service::MyMiniocService;
 use crate::minioc_service::minioc::minioc_service_server::MiniocServiceServer;
 use dotenvy::from_path;
-use std::path::Path;
-use tracing_subscriber;
+use std::sync::Arc;
+use messengerc::{connect_to_messenger_service, MessagingService};
+use tokio::sync::Mutex;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-
-    tracing_subscriber::fmt::init();
     // Load the environment variables from a custom file
     let custom_env_path = Path::new("proto-definitions/.service");
     from_path(custom_env_path).expect("Failed to load environment variables from custom path");
@@ -25,7 +25,21 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let addr = format!("{}:{}", ip, port).parse().unwrap();
 
     let minioc_service = MyMiniocService::default();
-    println!("Server listening on {}", addr);
+
+    let mes = format!("Minioc listening on {}", &addr);
+    println!("{}", &mes);
+
+    let tag = env::var("MINIOC_TAG").expect("Missing 'port' environment variable");
+
+    let messenger_client = connect_to_messenger_service().await
+        .ok_or("Failed to connect to messenger service")?;
+
+    let messaging_service = MessagingService::new(
+        Arc::new(Mutex::new(messenger_client)),
+        tag.clone(),
+    );
+    // Example: Publish a message (can be removed or modified as needed)
+    let _ = messaging_service.publish_message(mes, Some(vec![tag])).await;
 
     // Include the descriptor set for reflection
     let descriptor_set = include_bytes!(concat!(env!("OUT_DIR"), "/minioc_descriptor.bin"));
