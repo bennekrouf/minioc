@@ -9,9 +9,12 @@ use crate::minioc_service::MyMiniocService;
 use crate::minioc_service::minioc::minioc_service_server::MiniocServiceServer;
 use dotenvy::from_path;
 use std::path::Path;
+use tracing_subscriber;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+
+    tracing_subscriber::fmt::init();
     // Load the environment variables from a custom file
     let custom_env_path = Path::new("proto-definitions/.service");
     from_path(custom_env_path).expect("Failed to load environment variables from custom path");

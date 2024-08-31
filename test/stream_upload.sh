@@ -2,7 +2,7 @@
 
 # Replace these with appropriate values
 FILE="toto.txt"
-TENANT="mayorana"
+TENANT="mayorana1"
 FILENAME="toto.txt"
 
 # Stream file chunks to grpcurl
