@@ -13,7 +13,7 @@ This Rust-based gRPC service allows you to stream a file to an S3-compatible sto
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/s3-connector.git
+    git clone https://github.com/bennekrouf/s3-connector.git
     cd s3-connector
     ```
 
